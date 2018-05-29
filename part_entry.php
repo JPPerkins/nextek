@@ -1,60 +1,58 @@
 <?php session_start(); ?>
+
 <!DOCTYPE html>
-<?php
-// include("db_header.php") is just an easy way to allow local settings
-// configuration quickly by changing 1 file to update the whole application
-include("db_header.php");
+<html lang="en">
+  <?php 
+    $_SESSION["last_page"] = "part_entry.php?entry=" . $_GET["entry"];
+    include("db_header.php");
+    $seid_name = $_GET["entry"]; 
+  ?>
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-if($conn->connect_error) {
-  $conn_failure = true;
-}
-else {
-  $conn_failure = false;
-}
-$_SESSION["last_page"] = "part_entry.php?entry=" . $_GET["entry"];
-$seid_name = $_GET["entry"];
-?>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nextek - Caltech</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="css/bootstrap.css" media="screen">
+  </head>
+  <body>
+    <?php
+      include("navbar.php");
+      $conn = new mysqli($servername, $username, $password);
+      if($conn->connect_error) {
+        die("Connection Failed");
+      }
+      mysqli_close($conn);
+    ?>
+    <div class="container">
+      <?php
+        $conn = new mysqli($servername, $username, $password, $dbname);
+        $sql = "SELECT * FROM partdata, parttype WHERE eid = '" . $seid_name . "' AND partdata.parttype = parttype.Name";
+        $result = $conn->query($sql);
+        mysqli_close($conn);
 
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/styles.css">
-  <title><?php echo $seid_name; ?> data</title>
-</head>
-<body>
-  <div class="container">
-  <?php
-    include("banner.php");
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    $sql = "SELECT * FROM partdata, parttype WHERE eid = '" . $seid_name . "' AND partdata.parttype = parttype.Name";
-    $result = $conn->query($sql);
-    mysqli_close($conn);
-
-    if($result->num_rows > 0) {
-      $row = $result->fetch_assoc();
-
-      $N_datetime = $row["date_time"];
-      $timestamp = strtotime($N_datetime);
-      $date = date('m/d/Y', $timestamp);
-      $timestamp = strtotime($N_datetime . " + 365 day");
-      $N_date = date('m/d/Y', $timestamp);
-    } else {
-      echo "error";
-    }
+        if($result->num_rows > 0) {
+          $row = $result->fetch_assoc();
+          $N_datetime = $row["date_time"];
+          $timestamp = strtotime($N_datetime);
+          $date = date('m/d/Y', $timestamp);
+          $timestamp = strtotime($N_datetime . " + 365 day");
+          $N_date = date('m/d/Y', $timestamp);
+          $tolerance = $row["typetol"];
+        } else {
+          echo "error";
+        }
 
     // DISPLAY PART INFORMATION
 
-    $tolerance = $row["typetol"];
-    echo "<table><col width=200><col width=200><col width=200><col width=200><col width=200><col width=200>";
-    echo "<tr><td>ID: " . $row["eid"] . "</td><td>Model: " . $row["eid"] . "</td><td>Date: " . $date . "</td><td>Cal Tech: " . $row["caltech"] . "</td>
-          <td>Type: " . $row["parttype"] . "</td><td>Tolerance: " . $row["typetol"] * 100 . "%</td></tr>";
-    echo "</table>";
-    echo "</br></br>";
-    echo "<h3>Standards:</h3></br>";
+
+        echo "<br><table><col width=200><col width=200><col width=200><col width=200><col width=200><col width=200>";
+        echo "<tr><td>ID: " . $row["eid"] . "</td><td>Model: " . $row["eid"] . "</td><td>Date: " . $date . "</td><td>Cal Tech: " . $row["caltech"] . "</td>
+              <td>Type: " . $row["parttype"] . "</td><td>Tolerance: " . $row["typetol"] * 100 . "%</td></tr>";
+        echo "</table>";
+        echo "</br></br>";
+        echo "<h3>Standards:</h3></br>";
 
     // DISPLAY STANDARD INFORMATION
 

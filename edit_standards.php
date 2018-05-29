@@ -1,38 +1,37 @@
 <?php session_start(); ?>
+
 <!DOCTYPE html>
-<?php
-// include("db_header.php") is just an easy way to allow local settings
-// configuration quickly by changing 1 file to update the whole application
-include("db_header.php");
+<html lang="en">
+  <?php 
+    $_SESSION["last_page"] = "edit_standards.php";
+    include("db_header.php"); 
+  ?>
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-if($conn->connect_error) {
-  $conn_failure = true;
-}
-else {
-  $conn_failure = false;
-}
-
-$_SESSION["last_page"] = "edit_standards.php";
-
-?>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/styles.css">
-  <title>Nextek - Caltech</title>
-</head>
-<body>
-  <div class="container">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nextek - Caltech</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="css/bootstrap.css" media="screen">
+  </head>
+  <body>
+    <?php
+      include("navbar.php");
+      $conn = new mysqli($servername, $username, $password);
+      if($conn->connect_error) {
+        die("Connection Failed");
+      }
+      mysqli_close($conn);
+    ?>
+    <div class="container">
     <!-- caltech table -->
     <?php
-      include("banner.php");
       $conn = new mysqli($servername, $username, $password, $dbname);
       $sql = "SELECT * FROM standards, stdtype WHERE standards.stdtype = stdtype.type";
       $result = $conn->query($sql);
-
+      mysqli_close($conn);
+      
       if ($result->num_rows > 0) {
         echo "<table><col width=150><col width=150><col width=150><col width=150><col width=150><col width=150><col width=150>";
         echo "<tr><td><h2>Standards</h2></td></tr>";
