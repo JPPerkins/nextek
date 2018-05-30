@@ -2,12 +2,12 @@
 include("db_header.php");
 $conn = new mysqli($servername, $username, $password, $dbname);
 if($conn->connect_error) {
-  die("Connection to database failed. Failed to add an unit");
+  die("Connection to database failed. Failed to add a user");
 }
 
-$unit_name = $_POST["unit_name"];
+$username = $_POST["username"];
 
-$sql = "INSERT INTO unitlist (unit_name) VALUES ('" . $unit_name . "')";
+$sql = "INSERT INTO userlist (username) VALUES ('" . $username . "')";
 $result = $conn->query($sql);
 mysqli_close($conn);
 

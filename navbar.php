@@ -37,13 +37,13 @@
             <tr>
               <form class="form-inline my-2 my-lg-0" method="post" action="login.php">
                 <td>
-                <select class="form-control" name="caltech">
+                <select class="form-control" name="username">
                   <?php
                     $conn = new mysqli($servername, $username, $password, $dbname);
-                    $sql = "SELECT uname from caltech";
+                    $sql = "SELECT username from userlist";
                     $result = $conn->query($sql);
                     while ($row = $result->fetch_assoc()) {
-                      echo "<option value=\"" . $row["uname"] . "\">" . $row["uname"] . "</option>";
+                      echo "<option value=\"" . $row["username"] . "\">" . $row["username"] . "</option>";
                     }
                     mysqli_close($conn);
                   ?>

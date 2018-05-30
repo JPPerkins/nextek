@@ -29,7 +29,14 @@
       <br>
       <h2>History</h2>
       <br>
+      <a class='btn btn-outline-info' href='users.php'>Edit Users</a>
+      <a class='btn btn-outline-info' href='standard_types.php'>Edit Parts</a>
+      <a class='btn btn-outline-info' href='standard_types.php'>Edit Standards</a>
+      <a class='btn btn-outline-info' href='units.php'>Edit Equipment Types & Units</a>
+      <a class='btn btn-outline-info' href='standard_types.php'>Edit Standard Types</a>
       <?php
+
+      
         $conn = new mysqli($servername, $username, $password, $dbname);
         $sql = "SELECT * FROM partdata";
         $result = $conn->query($sql);

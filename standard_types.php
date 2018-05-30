@@ -46,7 +46,7 @@
             $nextCalDate = date('m/Y', $dateString);
             echo "<tr><th scope=row>" . $row["std_type"] . "</th><td>" . $row["std_desc"] . "</td><td>" . 
               $row["std_cal_cycle"]  . " Years</td><td>" . $row["std_loc"] . "</td><td>" . $lastCalDate . 
-              "</td><td>" . $nextCalDate . "</td><td><a class='btn btn-info btn-sm' href=\"edit_standard_type.php?tid=" . $row['std_tid'] . "\">Edit</a></td></tr>";
+              "</td><td>" . $nextCalDate . "</td><td><a class='btn btn-outline-info btn-sm' href=\"edit_standard_type.php?tid=" . $row['std_tid'] . "\">Edit</a></td></tr>";
           }
           echo "</table>";
         } else {

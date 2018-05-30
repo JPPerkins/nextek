@@ -2,12 +2,13 @@
 include("db_header.php");
 $conn = new mysqli($servername, $username, $password, $dbname);
 if($conn->connect_error) {
-  die("Connection to database failed. Failed to add an unit");
+  die("Connection to database failed. Failed to add an equipment type");
 }
 
-$unit_name = $_POST["unit_name"];
+$type_name = $_POST["type_name"];
+$tolerance = $_POST["tolerance"];
 
-$sql = "INSERT INTO unitlist (unit_name) VALUES ('" . $unit_name . "')";
+$sql = "INSERT INTO typelist (type_name, type_tolerance) VALUES ('" . $type_name . "', " . $tolerance . ")";
 $result = $conn->query($sql);
 mysqli_close($conn);
 
