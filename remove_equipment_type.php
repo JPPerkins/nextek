@@ -12,5 +12,5 @@ mysqli_close($conn);
 if(!$result) {
   header("Location: http://" . $servername . $serverroot);
 }
-header("Location: http://" . $servername . $serverroot . "equipment_types.php");
+header("Location: http://" . $servername . $serverroot . "units.php");
 ?>
