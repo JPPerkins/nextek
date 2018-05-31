@@ -51,7 +51,7 @@
         <form method="post" action="add_equipment.php">
           <fieldset>
             <div class="row">
-              <div class="col-lg-3">
+              <div class="col-lg-2">
                 <div class="form-group">
                   <label class="col-form-label" for="serial_number">Serial Number</label>
                   <input type="text" class="form-control" name="serial_number" placeholder="Serial Number">
@@ -79,7 +79,7 @@
                   </select>
                 </div>
               </div>
-              <div class="col-lg-3">
+              <div class="col-lg-2">
                 <div class="form-group">
                   <label class="col-form-label" for="equip_location">Location</label>
                   <select class="form-control" name="equip_location">
@@ -89,6 +89,22 @@
                       $result = $conn->query($sql);
                       while ($row = $result->fetch_assoc()) {
                         echo "<option value=\"" . $row["location_id"] . "\">" . $row["location_name"] . "</option>";
+                      }
+                      mysqli_close($conn);
+                    ?>
+                  </select>
+                </div>
+              </div>
+              <div class="col-lg-2">
+                <div class="form-group">
+                  <label class="col-form-label" for="equip_viscon">Location</label>
+                  <select class="form-control" name="equip_viscon">
+                    <?php
+                      $conn = new mysqli($servername, $username, $password, $dbname);
+                      $sql = "SELECT * from conditionList";
+                      $result = $conn->query($sql);
+                      while ($row = $result->fetch_assoc()) {
+                        echo "<option value=\"" . $row["cond_quality"] . "\">" . $row["cond_quality"] . "</option>";
                       }
                       mysqli_close($conn);
                     ?>

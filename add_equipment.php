@@ -9,8 +9,9 @@ $serial_number = $_POST["serial_number"];
 $model_number = $_POST["model_number"];
 $equip_type = $_POST["equip_type"];
 $equip_location = $_POST["equip_location"];
+$equip_viscon = $_POST["equip_viscon"];
 
-$sql = "INSERT INTO equipmentlist (serial_number, model_number, equip_type, equip_location) VALUES ('" . $serial_number . "', '" . $model_number . "', " . $equip_type . ", " . $equip_location . ")";
+$sql = "INSERT INTO equipmentlist (serial_number, model_number, equip_type, equip_location, equip_viscon) VALUES ('" . $serial_number . "', '" . $model_number . "', " . $equip_type . ", " . $equip_location . ", '" . $equip_viscon . "')";
 $result = $conn->query($sql);
 mysqli_close($conn);
 
