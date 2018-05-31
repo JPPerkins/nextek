@@ -26,7 +26,7 @@
       <br>
       <?php
         $conn = new mysqli($servername, $username, $password, $dbname);
-        $sql = "SELECT * FROM standardtypelist";
+        $sql = "SELECT * FROM standardtypelist, locationlist WHERE std_loc = location_id";
         $result = $conn->query($sql);
         mysqli_close($conn);
         if ($result->num_rows > 0) {
@@ -45,7 +45,7 @@
             $dateString = strtotime($dateTime . " + " . $row["std_cal_cycle"] . " years");
             $nextCalDate = date('m/Y', $dateString);
             echo "<tr><th scope=row>" . $row["std_type"] . "</th><td>" . $row["std_desc"] . "</td><td>" . 
-              $row["std_cal_cycle"]  . " Years</td><td>" . $row["std_loc"] . "</td><td>" . $lastCalDate . 
+              $row["std_cal_cycle"]  . " Years</td><td>" . $row["location_name"] . "</td><td>" . $lastCalDate . 
               "</td><td>" . $nextCalDate . "</td><td><a class='btn btn-outline-info btn-sm' href=\"edit_standard_type.php?tid=" . $row['std_tid'] . "\">Edit</a></td></tr>";
           }
           echo "</table>";
@@ -83,8 +83,18 @@
               </div>
               <div class="col-lg-4">
                 <div class="form-group">
-                    <label class="col-form-label" for="stdTypeListLoc">Location</label>
-                    <input type="text" class="form-control" name="stdTypeListLoc" placeholder="Location">
+                  <label class="col-form-label" for="stdTypeListLoc">Location</label>
+                  <select class="form-control" name="stdTypeListLoc">
+                    <?php
+                      $conn = new mysqli($servername, $username, $password, $dbname);
+                      $sql = "SELECT * from locationlist";
+                      $result = $conn->query($sql);
+                      while ($row = $result->fetch_assoc()) {
+                        echo "<option value=\"" . $row["location_id"] . "\">" . $row["location_name"] . "</option>";
+                      }
+                      mysqli_close($conn);
+                    ?>
+                  </select>
                 </div>
               </div>
               <div class="col-lg-2">
